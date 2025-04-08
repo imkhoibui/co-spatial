@@ -12,7 +12,7 @@ workflow FETCH_DATA {
             .map { meta, fastq_out -> 
                 def meta_id = meta["sample_id"]
                 def fastq_path = [fastq_out.toString(), meta["experiment"].toString(), meta_id].join("/")
-                return [meta: meta_id, fastq_out: fastq_path]
+                return [meta_id, fastq_path]
             }
             .set { ch_input_fasterq_dump }
 
@@ -20,10 +20,12 @@ workflow FETCH_DATA {
             ch_input
         )
 
-        PREFETCH.out.sra.view()
+        ch_fasterq_dump_input = PREFETCH.out.sra.join(ch_input_fasterq_dump)
 
+        FASTERQ_DUMP(
+            ch_fasterq_dump_input
+        )
 
-        // FASTERQ_DUMP(
-        //     ch_fastq_out
-        // )
+    emit:
+        FASTERQ_DUMP.out.fastq
 }

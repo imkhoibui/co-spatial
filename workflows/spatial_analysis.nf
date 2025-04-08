@@ -9,4 +9,5 @@ workflow SPATIAL_ANALYSIS {
         ch_input,
         ch_fastq_out
     )
+
 }

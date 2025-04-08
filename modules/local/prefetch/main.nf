@@ -1,17 +1,20 @@
 process PREFETCH {
     tag "${asc_id}"
-    label "process_medium"
+    label "process_high"
 
-    container "community.wave.seqera.io/library/sra-tools:3.2.0--7131354b4197d164"
+    container 'https://depot.galaxyproject.org/singularity/sra-tools:3.1.0--h9f5acd7_0'
 
     input:
-    val asc_id
+    tuple val(asc_id), val(experiment)
 
     output:
-    tuple val(asc_id), path("${asc_id}/.sra")           , emit: sra
+    tuple val(asc_id), path("${asc_id}/*.sra")           , emit: sra
 
     script:
+    def args            = task.ext.args ?: ""
     """
-    prefetch $asc_id 
+    prefetch \\
+        $asc_id \\
+        $args
     """
 }

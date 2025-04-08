@@ -1,0 +1,19 @@
+N E X T F L O W  ~  version 23.10.0
+Launching `main.nf` [stupefied_marconi] DSL2 - revision: d975f638bc
+[-        ] process > SPATIAL_ANALYSIS:FETCH_DATA... -
+[-        ] process > SPATIAL_ANALYSIS:FETCH_DATA... -
+WARN: There's no process matching config selector: CELLRANGER
+
+[1e/10b713] process > SPATIAL_ANALYSIS:FETCH_DATA... [100%] 4 of 4, cached: 4
+[-        ] process > SPATIAL_ANALYSIS:FETCH_DATA... -
+WARN: There's no process matching config selector: CELLRANGER
+
+executor >  local (1)
+[fc/572e18] process > SPATIAL_ANALYSIS:FETCH_DATA... [100%] 12 of 12, cached:...
+[9a/9d9698] process > SPATIAL_ANALYSIS:FETCH_DATA... [  0%] 0 of 12
+WARN: There's no process matching config selector: CELLRANGER
+
+executor >  local (1)
+[fc/572e18] process > SPATIAL_ANALYSIS:FETCH_DATA... [100%] 12 of 12, cached:...
+[9a/9d9698] process > SPATIAL_ANALYSIS:FETCH_DATA... [  0%] 0 of 12
+WARN: There's no process matching config selector: CELLRANGER
