@@ -7,19 +7,23 @@ workflow FETCH_DATA {
         ch_fastq_out
 
     main:
-        ch_asc_id = ch_input.map { 
-            [meta: it[0].take(3), asc: it[0]] 
-        }
-        ch_fastq_out = ch_fastq_out + "/" + ch_input.map { it[1] }
 
-        ch_asc_id.view()
-        ch_fastq_out.view()
+        ch_input.combine(ch_fastq_out)
+            .map { meta, fastq_out -> 
+                def meta_id = meta["sample_id"]
+                def fastq_path = [fastq_out.toString(), meta["experiment"].toString(), meta_id].join("/")
+                return [meta: meta_id, fastq_out: fastq_path]
+            }
+            .set { ch_input_fasterq_dump }
 
         PREFETCH(
-            ch_asc_id
+            ch_input
         )
 
-        FASTERQ_DUMP(
-            ch_fastq_out
-        )
+        PREFETCH.out.sra.view()
+
+
+        // FASTERQ_DUMP(
+        //     ch_fastq_out
+        // )
 }

@@ -1,5 +1,5 @@
 process PREFETCH {
-    tag "${meta.id}"
+    tag "${asc_id}"
     label "process_medium"
 
     container "community.wave.seqera.io/library/sra-tools:3.2.0--7131354b4197d164"
