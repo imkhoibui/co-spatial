@@ -1,19 +1,46 @@
 N E X T F L O W  ~  version 23.10.0
-Launching `main.nf` [stupefied_marconi] DSL2 - revision: d975f638bc
-[-        ] process > SPATIAL_ANALYSIS:FETCH_DATA... -
-[-        ] process > SPATIAL_ANALYSIS:FETCH_DATA... -
+Launching `main.nf` [deadly_majorana] DSL2 - revision: d975f638bc
 WARN: There's no process matching config selector: CELLRANGER
 
-[1e/10b713] process > SPATIAL_ANALYSIS:FETCH_DATA... [100%] 4 of 4, cached: 4
-[-        ] process > SPATIAL_ANALYSIS:FETCH_DATA... -
-WARN: There's no process matching config selector: CELLRANGER
+------------------------------------------------------------
+Sender: LSF System <lsfadmin@node-14-18>
+Subject: Job 898652: <nextflow run main.nf -profile singularity --skip_fetch_data true --input data/samplesheet.csv --fastq_out data --outdir result -resume> in cluster <farm22> Done
 
-executor >  local (1)
-[fc/572e18] process > SPATIAL_ANALYSIS:FETCH_DATA... [100%] 12 of 12, cached:...
-[9a/9d9698] process > SPATIAL_ANALYSIS:FETCH_DATA... [  0%] 0 of 12
-WARN: There's no process matching config selector: CELLRANGER
+Job <nextflow run main.nf -profile singularity --skip_fetch_data true --input data/samplesheet.csv --fastq_out data --outdir result -resume> was submitted from host <farm22-head2> by user <kd12> in cluster <farm22> at Wed Apr  9 08:24:59 2025
+Job was executed on host(s) <4*node-14-18>, in queue <normal>, as user <kd12> in cluster <farm22> at Wed Apr  9 08:24:59 2025
+</nfs/users/nfs_k/kd12> was used as the home directory.
+</lustre/scratch125/ids/team353/kd12/co-spatial> was used as the working directory.
+Started at Wed Apr  9 08:24:59 2025
+Terminated at Wed Apr  9 08:25:14 2025
+Results reported at Wed Apr  9 08:25:14 2025
 
-executor >  local (1)
-[fc/572e18] process > SPATIAL_ANALYSIS:FETCH_DATA... [100%] 12 of 12, cached:...
-[9a/9d9698] process > SPATIAL_ANALYSIS:FETCH_DATA... [  0%] 0 of 12
-WARN: There's no process matching config selector: CELLRANGER
+Your job looked like:
+
+------------------------------------------------------------
+# LSBATCH: User input
+nextflow run main.nf -profile singularity --skip_fetch_data true --input data/samplesheet.csv --fastq_out data --outdir result -resume
+------------------------------------------------------------
+
+Successfully completed.
+
+Resource usage summary:
+
+    CPU time :                                   21.08 sec.
+    Max Memory :                                 88 MB
+    Average Memory :                             71.00 MB
+    Total Requested Memory :                     4000.00 MB
+    Delta Memory :                               3912.00 MB
+    Max Swap :                                   -
+    Max Processes :                              4
+    Max Threads :                                25
+    Run time :                                   13 sec.
+    Turnaround time :                            15 sec.
+
+The output (if any) is above this job summary.
+
+
+
+PS:
+
+Read file <output.err> for stderr output of this job.
+
