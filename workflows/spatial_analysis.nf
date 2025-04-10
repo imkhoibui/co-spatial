@@ -1,5 +1,5 @@
 include { FETCH_DATA                             } from "${projectDir}/subworkflows/local/fetch_data.nf"
-include { SCRNA_PREPROCESS                       } from "${projectDir}/subworkflows/local/scrna_preprocess.nf"
+include { SPATIAL_RNA                            } from "${projectDir}/subworkflows/local/spatial_rna.nf"
 
 workflow SPATIAL_ANALYSIS {
     ch_input            = Channel.fromPath(params.input).splitCsv( header: true )
@@ -20,6 +20,8 @@ workflow SPATIAL_ANALYSIS {
             return [meta_id, fastq_path]
         }
         .set { ch_input_fastq }
+
+    ch_input_fastq.view()
 
     // SCRNA_PREPROCESS(
     //     ch_input_fastq
