@@ -1,0 +1,6 @@
+work/
+data/references/
+data/SRR*
+container/
+.nextflow
+*log*

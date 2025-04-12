@@ -2,7 +2,9 @@ process PREFETCH {
     tag "${asc_id}"
     label "process_high"
 
-    container 'https://depot.galaxyproject.org/singularity/sra-tools:3.1.0--h9f5acd7_0'
+    container "${ workflow.containerEngine == 'singularity' ?
+        'https://depot.galaxyproject.org/singularity/sra-tools:3.1.0--h9f5acd7_0' :
+        'community.wave.seqera.io/library/sra-tools:3.2.1--2063130dadd340c5' }"
 
     input:
     tuple val(asc_id), val(experiment)

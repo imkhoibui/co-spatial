@@ -26,8 +26,6 @@ workflow FETCH_DATA {
             ch_fasterq_dump_input
         )
 
-        FASTERQ_DUMP.out.fastq.view()
-
     emit:
         FASTERQ_DUMP.out.fastq
         ch_fasterq_dump_input
