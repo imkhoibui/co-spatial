@@ -10,6 +10,7 @@ workflow SPATIAL_ANALYSIS {
     ch_spatial_barcodes     = Channel.fromPath(params.spatial_barcodes)
     ch_ref_map              = ch_genome_meta.combine(Channel.fromPath(params.ref_map))
     ch_ref_annotation       = Channel.fromPath(params.ref_annotation)
+    ch_ref_atac_genome      = Channel.fromPath(params.ref_atac_genome)
     ch_genome_fasta         = Channel.fromPath(params.whole_genome_fasta)
     ch_genome_fasta_files   = ch_genome_meta.combine(ch_genome_fasta)
 
@@ -57,7 +58,8 @@ workflow SPATIAL_ANALYSIS {
     )
 
     // Running spatial ATACseq module
-    // SPATIAL_ATAC(
-    //     ch_input_atacseq,
-    // )
+    SPATIAL_ATAC(
+        ch_input_atacseq,
+        ch_ref_atac_genome
+    )
 }
