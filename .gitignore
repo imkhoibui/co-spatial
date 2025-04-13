@@ -1,6 +1,7 @@
 work/
 data/references/
 data/SRR*
+data/test
 container/
 .nextflow
 *log*

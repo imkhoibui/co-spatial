@@ -1,8 +1,8 @@
 process ST_PIPELINE {
     tag "${meta}"
-    label "process_high"
+    label "process_high_mem"
 
-    container "${ workflow.containerEngine == 'singularity' ?: 'quay.io/imkhoibui/st_pipeline' }"
+    container "${ workflow.containerEngine == 'singularity' ?: 'quay.io/imkhoibui/stpipeline:updated' }"
 
     input:
     tuple val(meta), path(fastq1), path(fastq2)

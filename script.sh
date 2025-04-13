@@ -5,7 +5,7 @@ nextflow run main.nf \
     --input data/samplesheet.csv \
     --fastq_out data \
     --spatial_barcodes data/references/spatial_barcodes.txt \
-    --ref_map data/references/Mus_musculus/Ensembl/GRCm38/Sequence/STARIndex \
+    --ref_map data/references/Mus_musculus/Ensembl/GRCm38/Sequence/star \
     --ref_annotation data/references/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf \
     --outdir result \
     -resume 2>&1 | tee headnode.log

@@ -16,7 +16,7 @@ workflow SPATIAL_RNA {
         ch_input_rnaseq
     }
 
-    if ( !params.skip_starindex ) {
+    if ( !params.skip_star_genome ) {
         STAR_GENOMEGENERATE(
             ch_genome_fasta_files,
             ch_ref_annotation
