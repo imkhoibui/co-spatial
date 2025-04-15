@@ -5,6 +5,7 @@ ATAC-seq and spatial RNA-seq-ready counts & peaks outputs for joint spatial ATAC
 
 ### Requirements
 [Nextflow](https://www.nextflow.io/docs/stable/install.html)
+
 [Docker](https://docs.docker.com/engine/install/)
 
 ### Running the pipeline

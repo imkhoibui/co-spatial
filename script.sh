@@ -7,6 +7,6 @@ nextflow run main.nf \
     --spatial_barcodes data/references/spatial_barcodes.txt \
     --ref_map data/references/Mus_musculus/Ensembl/GRCm38/Sequence/star \
     --ref_annotation data/references/Mus_musculus/Ensembl/GRCm38/Annotation/Genes/genes.gtf \
-    --ref_atac_genome data/references/Mus_musculus/refdata-cellranger-atac-mm10-1.2.0.tar.gz \
+    --ref_atac_genome /mnt/raid5/kbui/misc/co-spatial/data/references/Mus_musculus/mm10-2020-A/mm10 \
     --outdir result \
     -resume 2>&1 | tee headnode.log

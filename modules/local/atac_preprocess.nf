@@ -17,12 +17,12 @@ process ATAC_PREPROCESS {
     def output_R3 = "${meta}_S1_L001_R3_001.fastq.gz"
     """
     #!/bin/bash 
-    python3 ${projectDir}/bin/BC_process.py --input ${fastq2} 
+    python3 ${projectDir}/bin/BC_process.py --input ${fastq2} \\
         --output_R1 $output_R1 \\
         --output_R2 $output_R2
     
     gzip $output_R1
     gzip $output_R2
-    mv $fastq3 $output_R3
+    mv $fastq1 $output_R3
     """
 }

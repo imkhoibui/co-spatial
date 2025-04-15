@@ -1,11 +1,11 @@
 include { FETCH_DATA                             } from "${projectDir}/subworkflows/local/fetch_data.nf"
 include { SPATIAL_RNA                            } from "${projectDir}/subworkflows/local/spatial_rna.nf"
+include { SPATIAL_ATAC                           } from "${projectDir}/subworkflows/local/spatial_atac.nf"
 
 workflow SPATIAL_ANALYSIS {
     ch_input                = Channel.fromPath(params.input).splitCsv( header: true )
     ch_fastq_out            = Channel.fromPath(params.fastq_out)
-    ch_outdir               = Channel.fromPath(params.outdir)
-    ch_genome_meta          = Channel.of("GRCm38")
+    ch_genome_meta          = Channel.of(params.meta)
 
     ch_spatial_barcodes     = Channel.fromPath(params.spatial_barcodes)
     ch_ref_map              = ch_genome_meta.combine(Channel.fromPath(params.ref_map))

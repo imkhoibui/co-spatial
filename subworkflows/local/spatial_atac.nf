@@ -3,6 +3,8 @@ include { CUTADAPT as CUTADAPT_LINKER1                  } from "${projectDir}/mo
 include { CUTADAPT as CUTADAPT_LINKER2                  } from "${projectDir}/modules/local/cutadapt/main.nf"
 
 include { ATAC_PREPROCESS                               } from "${projectDir}/modules/local/atac_preprocess.nf"
+include { CELLRANGER_MKREF                              } from "${projectDir}/modules/local/cellranger/mkref.nf"
+include { CELLRANGER                                    } from "${projectDir}/modules/local/cellranger/main.nf"
 
 workflow SPATIAL_ATAC {
     take:
@@ -27,8 +29,13 @@ workflow SPATIAL_ATAC {
             CUTADAPT_LINKER2.out.fastq
         )
         ch_cellranger_input = ATAC_PREPROCESS.out.fastq
-
+        
         // Running CellRanger ATAC
+        if (!params.skip_make_ref) {
+            CELLRANGER_MKREF()
+            ch_ref_atac_genome = CELLRANGER_MKREF().out.build
+        }
+
         CELLRANGER(
             ch_cellranger_input,
             ch_ref_atac_genome
