@@ -1,20 +1,11 @@
-workflow SPATIAL_RNA {
-    tag "${meta}"
-    label "process_medium"
+workflow SPATIAL_RNA_ATAC {
+    take:
+        ch_st_pipeline
+        ch_atac_outputs
 
-    input:
+    main:
+        ch_st_pipeline = ch_atac_outputs
 
-
-    output:
-
-
-    script:
-    """
-
-    """
-
-    stub:
-    """
-
-    """
+    emit:
+        outputs = ch_st_pipeline
 }

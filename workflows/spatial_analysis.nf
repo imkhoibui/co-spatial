@@ -2,6 +2,8 @@ include { FETCH_DATA                             } from "${projectDir}/subworkfl
 include { SPATIAL_RNA                            } from "${projectDir}/subworkflows/local/spatial_rna.nf"
 include { SPATIAL_ATAC                           } from "${projectDir}/subworkflows/local/spatial_atac.nf"
 
+include { SPATIAL_RNA_ATAC                       } from "${projectDir}/subworkflows/local/spatial_integration_rna_atac.nf"
+
 workflow SPATIAL_ANALYSIS {
     ch_input                = Channel.fromPath(params.input).splitCsv( header: true )
     ch_fastq_out            = Channel.fromPath(params.fastq_out)
@@ -61,5 +63,11 @@ workflow SPATIAL_ANALYSIS {
     SPATIAL_ATAC(
         ch_input_atacseq,
         ch_ref_atac_genome
+    )
+
+    // Running joint spatial RNAseq-ATACseq
+    SPATIAL_RNA_ATAC(
+        SPATIAL_RNA.out.st_pipeline,
+        SPATIAL_ATAC.out.atac_outputs
     )
 }

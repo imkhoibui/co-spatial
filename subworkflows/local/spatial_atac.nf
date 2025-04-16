@@ -41,4 +41,6 @@ workflow SPATIAL_ATAC {
             ch_ref_atac_genome
         )
 
+    emit: 
+        atac_outputs = CELLRANGER.out.outputs
 }

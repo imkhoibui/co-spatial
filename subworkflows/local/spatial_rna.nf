@@ -33,5 +33,5 @@ workflow SPATIAL_RNA {
     )
 
     emit:
-        ST_PIPELINE.out.st_pipeline
+        st_pipeline = ST_PIPELINE.out.st_pipeline
 }

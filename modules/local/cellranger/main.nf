@@ -9,7 +9,7 @@ process CELLRANGER {
     path ref_atac_genome
 
     output:
-    tuple val(meta), path("outs/*")                 , emit: outputs
+    tuple val(meta), path("${meta}/outs/*")                 , emit: outputs
 
     script:
     def config_in               = task.ext.config_in ?: ""
@@ -19,7 +19,11 @@ process CELLRANGER {
     def args                    = task.ext.args ?: ""
     """
     #!/bin/bash
-    if [ $use_custom_cratac_file ] && cp $cratac_txt /opt/cellranger-atac-2.1.0/lib/python/atac/barcodes/
+    if [ "${use_custom_cratac_file}" == true ]; then
+        echo "Copying new cratac file"
+        cp $cratac_txt /opt/cellranger-atac-2.1.0/lib/python/atac/barcodes/
+    fi
+
     mkdir fastq_files
     cp *fastq.gz fastq_files/
 
@@ -28,7 +32,6 @@ process CELLRANGER {
         --reference $ref_atac_genome \\
         --fastqs fastq_files/ \\
         --sample $meta \\
-        --localcores $task.cpus \\
-        $args
+        --localcores $task.cpus
     """
 }
