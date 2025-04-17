@@ -9,6 +9,7 @@ workflow SPATIAL_ANALYSIS {
     ch_fastq_out            = Channel.fromPath(params.fastq_out)
     ch_genome_meta          = Channel.of(params.meta)
 
+    ch_tissue_dir           = Channel
     ch_spatial_barcodes     = Channel.fromPath(params.spatial_barcodes)
     ch_ref_map              = ch_genome_meta.combine(Channel.fromPath(params.ref_map))
     ch_ref_annotation       = Channel.fromPath(params.ref_annotation)
@@ -68,6 +69,8 @@ workflow SPATIAL_ANALYSIS {
     // Running joint spatial RNAseq-ATACseq
     SPATIAL_RNA_ATAC(
         SPATIAL_RNA.out.st_pipeline,
-        SPATIAL_ATAC.out.atac_outputs
+        SPATIAL_ATAC.out.atac_outputs,
+        ch_tissue_dir,
+        ch_spatial_barcodes
     )
 }

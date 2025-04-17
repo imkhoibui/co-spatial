@@ -1,4 +1,4 @@
-process SIGNAC {
+process SIGNAC_ATAC {
     tag "${meta}"
     label "process_medium"
 
@@ -7,9 +7,9 @@ process SIGNAC {
         'community.wave.seqera.io/library/r-signac_r-seurat:29ac9966e457cf5a' }"
 
     input:
-    tuple val(meta), path(counts)
-    tuple val(meta), path(fragments)
-    tuple val(meta2), path(tissue_dir)
+    tuple val(meta), path(rds)
+    tuple val(meta), path(fragment_outputs)
+    tuple val(meta), path(tissue_dir)
     path spatial_barcodes
 
     output:
@@ -23,11 +23,15 @@ process SIGNAC {
     library(Seurat)
 
     # Create Seurat Object
-    ${meta} <- CreateSeuratObject(counts = ${counts})
+    data <- readRDS("${rds}"}
+    DefaultAssay(data) <- "ATAC"
+    
+    atac_counts <- Read10X_h5("${fragment_outputs}/raw_peak_bc_matrix.h5")
+    atac_counts <- atac_counts[, bc_in_tissue]
 
-    # Load spatial barcodes
+    NucleosomeSignal(data)
+    TSSEnrichment(data)
 
-    spatial_barcodes <- read.csv(${spatial_barcodes})
     
     """
     
