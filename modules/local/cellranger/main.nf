@@ -9,7 +9,7 @@ process CELLRANGER {
     path ref_atac_genome
 
     output:
-    tuple val(meta), path("${meta}/outs/*")                 , emit: outputs
+    tuple val(meta), path("${meta}/outs")                 , emit: outputs
 
     script:
     def config_in               = task.ext.config_in ?: ""

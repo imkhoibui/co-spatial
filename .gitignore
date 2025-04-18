@@ -3,6 +3,6 @@ data/references/
 data/SRR*
 data/test
 result
-container/
+container/subtest
 .nextflow
 *log*

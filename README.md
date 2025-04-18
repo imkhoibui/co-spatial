@@ -10,6 +10,8 @@ With Nextflow, user can simultaneously process both spatial-ATACseq and spatial-
 
 [Docker](https://docs.docker.com/engine/install/)
 
+In order to perform downstream analysis with `Signac` and `ArchR`, users can install the docker container found under `container/` and modify anything needed. However, the processes are already made convenient using a [built container](quay.io/imkhoibui/r-container-sp:updated)
+
 This pipeline requires high computing resources to run efficiently, please modify `base.config` if needed.
 
 ### Workflows:
@@ -17,6 +19,7 @@ This pipeline requires high computing resources to run efficiently, please modif
 2. The downloaded files are "branched" into either spatial-RNA or spatial-ATAC for its separate processing.
     2a. For sp-RNAseq data, FASTQ files are preprocessed to extract barcode A, barcode B & UMI (read2). They are then processed using [ST_pipeline](https://github.com/jfnavarro/st_pipeline), where it is aligned to [STAR](https://github.com/alexdobin/STAR) using a reference genome & annotation.
     2b. For sp-ATACseq data, FASTQ files are preprocessed and aligned to a reference genome. The count data is then converted into 10X Genomics CellRanger-ATAC format which then can be counted using [cellranger-atac](https://github.com/10XGenomics/cellranger-atac)
+3. To perform downstream analysis, `Seurat` is used to connected the two modals: `RNA` and `ATAC`. Samples share the same name under `samplesheet.csv` file.
 
 ### Inputs
 In order to successfully run the pipeline, you must provide a `samplesheet.csv` file with the following content:
@@ -42,11 +45,24 @@ nextflow run main.nf \
     --outdir <output-dir> 
 ```
 
-For convenience of testing, I have created a test profile to run the pipeline on a very small set of data (10-mil reads) of 2 samples:
+### Testing the pipeline
+
+For convenience of testing, I have created a test profile to run the pipeline on a very small set of data (10-mil reads) of 2 samples where you can download using
+```
+curl -O "https://zenodo.org/records/15241549/files/samplesheet.csv?download=1&preview=1"
+
+```
 
 ```
 nextflow run main.nf \
-    -profile test_subdata
+    -profile test,docker
+```
+
+To test the full set of these samples, please refer to:
+
+```
+nextflow run main.nf \
+    -profile test_full,docker
 ```
 
 ### Future updates
@@ -61,3 +77,5 @@ This pipeline is inspired by the publication: *Spatial epigenome-transcriptome c
 > Di Zhang, Yanxiang Deng, Petra Kukanja, Eneritz Agirre, Marek Bartosovic, Mingze Dong, Cong Ma, Sai Ma, Graham Su, Shuozhen Bao, Yang Liu, Yang Xiao, Gorazd B. Rosoklija, Andrew J. Dwork, J. John Mann, Kam W. Leong, Maura Boldrini, Liya Wang, Maximilian Haeussler, Benjamin J. Raphael, Yuval Kluger, Gonçalo Castelo-Branco & Rong Fan 
 >
 > _Nature_ 2023 March 15. doi: [10.1038/s41586-023-05795-1](https://doi.org/10.1038/s41586-023-05795-1)
+
+Source code to preprocess is modified based on [original repo](https://github.com/di-0579/Spatial_epigenome-transcriptome_co-sequencing)

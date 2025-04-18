@@ -1,0 +1,28 @@
+name: r-container-s
+channels:
+- defaults
+- conda-forge
+- bioconda
+dependencies:
+- python=3.8
+- r-base
+- r-dplyr
+- r-tidyverse
+- r-data.table
+- r-ggplot2
+- r-ggpubr
+- r-paletteer
+- bioconductor-ensdb.mmusculus.v79
+- bioconductor-genomeinfodb
+- r-seurat
+- r-seuratobject=5.0.2
+- r-matrix
+- r-patchwork
+- r-signac
+- r-archr
+- r-remotes
+- r-devtools
+- r-optparse
+- bioconductor-biovizbase
+- r-hdf5r
+- macs2

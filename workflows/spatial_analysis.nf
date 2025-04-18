@@ -2,7 +2,7 @@ include { FETCH_DATA                             } from "${projectDir}/subworkfl
 include { SPATIAL_RNA                            } from "${projectDir}/subworkflows/local/spatial_rna.nf"
 include { SPATIAL_ATAC                           } from "${projectDir}/subworkflows/local/spatial_atac.nf"
 
-// include { SPATIAL_RNA_ATAC                       } from "${projectDir}/subworkflows/local/spatial_integration_rna_atac.nf"
+include { SPATIAL_RNA_ATAC                       } from "${projectDir}/subworkflows/local/spatial_integration_rna_atac.nf"
 
 workflow SPATIAL_ANALYSIS {
     ch_input                = Channel.fromPath(params.input, checkIfExists: true).splitCsv( header: true )
@@ -52,34 +52,34 @@ workflow SPATIAL_ANALYSIS {
         }
 
     // Running spatial RNAseq module
-    // SPATIAL_RNA(
-    //     ch_input_rnaseq,
-    //     ch_spatial_barcodes,
-    //     ch_ref_map,
-    //     ch_ref_annotation,
-    //     ch_genome_fasta_files
-    // )
+    SPATIAL_RNA(
+        ch_input_rnaseq,
+        ch_spatial_barcodes,
+        ch_ref_map,
+        ch_ref_annotation,
+        ch_genome_fasta_files
+    )
 
-    // // Running spatial ATACseq module
-    // SPATIAL_ATAC(
-    //     ch_input_atacseq,
-    //     ch_ref_atac_genome
-    // )
+    // Running spatial ATACseq module
+    SPATIAL_ATAC(
+        ch_input_atacseq,
+        ch_ref_atac_genome
+    )
 
     // Running joint spatial RNAseq-ATACseq
+    ch_input
+        .map{ meta -> 
+            def project     = "${projectDir}"
+            def spatial_dir = "data/" + meta.name + "/spatial"   
+            def tissue_dir  = file([project, spatial_dir].join("/"))
+            return tuple(meta.name, tissue_dir)
+        }
+        .set{ ch_tissue_dir }
 
-    // ch_tissue_dir = ch_input
-    //     .map{ meta, experiment -> 
-
-    //         def tissue_dir = file([projectDir, "data", name, "spatial/tissue_positions_list.csv"].join("/"))
-    //         return tuple(id, tissue_dir)
-    //     }
-
-    ch_input.view()
-    // SPATIAL_RNA_ATAC(
-    //     SPATIAL_RNA.out.st_pipeline,
-    //     SPATIAL_ATAC.out.atac_outputs,
-    //     ch_tissue_dir,
-    //     ch_spatial_barcodes
-    // )
+    SPATIAL_RNA_ATAC(
+        SPATIAL_RNA.out.st_pipeline,
+        SPATIAL_ATAC.out.atac_outputs,
+        ch_tissue_dir,
+        ch_spatial_barcodes
+    )
 }

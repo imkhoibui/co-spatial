@@ -1,5 +1,4 @@
-include { SIGNAC_RNA } from "${projectDir}/modules/local/signac/signac_rna.nf"
-include { ARCH_R } from "${projectDir}/modules/local/archR/main.nf"
+include { SPATIAL_PROCESS } from "${projectDir}/modules/local/spatial_process.nf"
 
 workflow SPATIAL_RNA_ATAC {
     take:
@@ -9,18 +8,13 @@ workflow SPATIAL_RNA_ATAC {
         ch_spatial_barcodes
 
     main:
-        ch_st_pipeline = ch_st_pipeline
-        SIGNAC_RNA(
+        SPATIAL_PROCESS(
             ch_st_pipeline,
-            ch_st_tissue_dir,
+            ch_atac_outputs,
+            ch_tissue_dir,
             ch_spatial_barcodes
         )
 
-        // ARCH_R(
-        //     ch_st_pipeline,
-        //     ch_atac_outputs
-        // )
-
     emit:
-        outputs = ch_st_pipeline
+        SPATIAL_PROCESS.out.rds
 }
