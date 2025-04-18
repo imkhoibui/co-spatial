@@ -1,0 +1,15 @@
+library(Signac)
+library(Seurat)
+library(SeuratObject)
+library(GenomeInfoDb)
+library(EnsDb.Mmusculus.v79)
+library(patchwork)
+library(ggplot2)
+library(dplyr)
+library(ggpubr)
+library(Matrix)
+library(paletteer)
+set.seed(1234)
+
+args <- commandArgs(trailingOnly = TRUE)
+meta <- args$meta

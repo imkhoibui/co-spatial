@@ -1,4 +1,4 @@
-# CO-SPATIAL: A Nextflow pipeline to integrate spatial-ATAC-RNA seq data
+# CO-SPATIAL: A Nextflow pipeline to perform spatial-ATAC-RNA seq data integration
 
 Co-spatial is a Nextflow pipeline, inspired by [nf-core](https://nf-co.re) practices, to generate spatial
 ATAC-seq and spatial RNA-seq-ready counts & peaks outputs for joint spatial ATAC-RNA sequencing downstream analysis workflows.
@@ -9,6 +9,8 @@ With Nextflow, user can simultaneously process both spatial-ATACseq and spatial-
 [Nextflow](https://www.nextflow.io/docs/stable/install.html)
 
 [Docker](https://docs.docker.com/engine/install/)
+
+This pipeline requires high computing resources to run efficiently, please modify `base.config` if needed.
 
 ### Workflows:
 1. By providing a SRA accession, the data is `prefetch` and `fasterq-dump` into FASTQ files from spatial-omics experiments.
@@ -48,8 +50,14 @@ nextflow run main.nf \
 ```
 
 ### Future updates
-- Joint CUT&Tag-RNA sequencing subworkflow
+- Integrate a CUT&Tag-RNA sequencing subworkflow
+- Incorporate AWSBatch / HPC option (if I have access to one)
 
+### Citations
+This pipeline is inspired by the publication: *Spatial epigenome-transcriptome co-profiling of mammalian tissues*
 
-### References
-[Spatial epigenome-transcriptome co-profiling of mammalian tissues]
+> **Spatial epigenome-transcriptome co-profiling of mammalian tissues.**
+>
+> Di Zhang, Yanxiang Deng, Petra Kukanja, Eneritz Agirre, Marek Bartosovic, Mingze Dong, Cong Ma, Sai Ma, Graham Su, Shuozhen Bao, Yang Liu, Yang Xiao, Gorazd B. Rosoklija, Andrew J. Dwork, J. John Mann, Kam W. Leong, Maura Boldrini, Liya Wang, Maximilian Haeussler, Benjamin J. Raphael, Yuval Kluger, Gonçalo Castelo-Branco & Rong Fan 
+>
+> _Nature_ 2023 March 15. doi: [10.1038/s41586-023-05795-1](https://doi.org/10.1038/s41586-023-05795-1)

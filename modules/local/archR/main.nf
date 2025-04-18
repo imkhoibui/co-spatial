@@ -11,6 +11,5 @@ process ARCH_R {
 
     script:
     """
-
     """
 }

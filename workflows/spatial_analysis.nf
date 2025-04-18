@@ -2,19 +2,18 @@ include { FETCH_DATA                             } from "${projectDir}/subworkfl
 include { SPATIAL_RNA                            } from "${projectDir}/subworkflows/local/spatial_rna.nf"
 include { SPATIAL_ATAC                           } from "${projectDir}/subworkflows/local/spatial_atac.nf"
 
-include { SPATIAL_RNA_ATAC                       } from "${projectDir}/subworkflows/local/spatial_integration_rna_atac.nf"
+// include { SPATIAL_RNA_ATAC                       } from "${projectDir}/subworkflows/local/spatial_integration_rna_atac.nf"
 
 workflow SPATIAL_ANALYSIS {
-    ch_input                = Channel.fromPath(params.input).splitCsv( header: true )
-    ch_fastq_out            = Channel.fromPath(params.fastq_out)
+    ch_input                = Channel.fromPath(params.input, checkIfExists: true).splitCsv( header: true )
+    ch_fastq_out            = Channel.fromPath(params.fastq_out, checkIfExists: true)
     ch_genome_meta          = Channel.of(params.meta)
 
-    ch_tissue_dir           = Channel
-    ch_spatial_barcodes     = Channel.fromPath(params.spatial_barcodes)
-    ch_ref_map              = ch_genome_meta.combine(Channel.fromPath(params.ref_map))
-    ch_ref_annotation       = Channel.fromPath(params.ref_annotation)
-    ch_ref_atac_genome      = Channel.fromPath(params.ref_atac_genome)
-    ch_genome_fasta         = Channel.fromPath(params.whole_genome_fasta)
+    ch_spatial_barcodes     = Channel.fromPath(params.spatial_barcodes, checkIfExists: true)
+    ch_ref_map              = ch_genome_meta.combine(Channel.fromPath(params.ref_map, checkIfExists: true))
+    ch_ref_annotation       = Channel.fromPath(params.ref_annotation, checkIfExists: true)
+    ch_ref_atac_genome      = Channel.fromPath(params.ref_atac_genome, checkIfExists: true)
+    ch_genome_fasta         = Channel.fromPath(params.whole_genome_fasta, checkIfExists: true)
     ch_genome_fasta_files   = ch_genome_meta.combine(ch_genome_fasta)
 
     // Module to fetch SRA data
@@ -27,14 +26,15 @@ workflow SPATIAL_ANALYSIS {
 
     ch_input.combine(ch_fastq_out)
         .map { meta, fastq_out -> 
-            def meta_id = meta["sample_id"]
+            def meta_id    = meta["id"]
+            def meta_name  = meta["name"]
             def experiment = meta["experiment"]
             def fastq_path = [fastq_out.toString(), meta_id].join("/")
             return [meta_id, experiment, fastq_path]
         }
         .branch {
-            atacseq: it[1] == "atacseq"
-            rnaseq: it[1] == "rnaseq"
+            atacseq: it[1] == "ATAC"
+            rnaseq:  it[1] == "RNA"
         }
         .set { ch_input_fastq }
 
@@ -52,25 +52,34 @@ workflow SPATIAL_ANALYSIS {
         }
 
     // Running spatial RNAseq module
-    SPATIAL_RNA(
-        ch_input_rnaseq,
-        ch_spatial_barcodes,
-        ch_ref_map,
-        ch_ref_annotation,
-        ch_genome_fasta_files
-    )
+    // SPATIAL_RNA(
+    //     ch_input_rnaseq,
+    //     ch_spatial_barcodes,
+    //     ch_ref_map,
+    //     ch_ref_annotation,
+    //     ch_genome_fasta_files
+    // )
 
-    // Running spatial ATACseq module
-    SPATIAL_ATAC(
-        ch_input_atacseq,
-        ch_ref_atac_genome
-    )
+    // // Running spatial ATACseq module
+    // SPATIAL_ATAC(
+    //     ch_input_atacseq,
+    //     ch_ref_atac_genome
+    // )
 
     // Running joint spatial RNAseq-ATACseq
-    SPATIAL_RNA_ATAC(
-        SPATIAL_RNA.out.st_pipeline,
-        SPATIAL_ATAC.out.atac_outputs,
-        ch_tissue_dir,
-        ch_spatial_barcodes
-    )
+
+    // ch_tissue_dir = ch_input
+    //     .map{ meta, experiment -> 
+
+    //         def tissue_dir = file([projectDir, "data", name, "spatial/tissue_positions_list.csv"].join("/"))
+    //         return tuple(id, tissue_dir)
+    //     }
+
+    ch_input.view()
+    // SPATIAL_RNA_ATAC(
+    //     SPATIAL_RNA.out.st_pipeline,
+    //     SPATIAL_ATAC.out.atac_outputs,
+    //     ch_tissue_dir,
+    //     ch_spatial_barcodes
+    // )
 }

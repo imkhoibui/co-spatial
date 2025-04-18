@@ -1,3 +1,3 @@
-sample_id,experiment
-SRR22561636,rnaseq
-SRR22565186,atacseq
+id,name,experiment
+SRR22561636_sub,ME13_50um,RNA
+SRR22565186_sub,ME13_50um,ATAC

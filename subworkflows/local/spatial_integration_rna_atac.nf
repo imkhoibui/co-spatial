@@ -10,11 +10,11 @@ workflow SPATIAL_RNA_ATAC {
 
     main:
         ch_st_pipeline = ch_st_pipeline
-        // SIGNAC_RNA(
-        //     ch_st_pipeline,
-        //     ch_st_tissue_dir,
-        //     ch_spatial_barcodes
-        // )
+        SIGNAC_RNA(
+            ch_st_pipeline,
+            ch_st_tissue_dir,
+            ch_spatial_barcodes
+        )
 
         // ARCH_R(
         //     ch_st_pipeline,
