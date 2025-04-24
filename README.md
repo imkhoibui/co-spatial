@@ -49,8 +49,8 @@ nextflow run main.nf \
 
 For convenience of testing, I have created a test profile to run the pipeline on a very small set of data (10-mil reads) of 2 samples where you can download using
 ```
-curl -O "https://zenodo.org/records/15241549/files/samplesheet.csv?download=1&preview=1"
-
+curl -O "https://zenodo.org/records/15241549/files/SRR22561636_subset.zip?download=1"
+curl -O "https://zenodo.org/records/15241549/files/SRR22565186_subset.zip?download=1"
 ```
 
 ```
